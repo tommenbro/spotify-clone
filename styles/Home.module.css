@@ -114,3 +114,11 @@
     flex-direction: column;
   }
 }
+
+::-webkit-scrollbar-track-piece:start {
+  background: url("public/black.png") repeat-y !important;
+}
+
+::-webkit-scrollbar-track-piece:end {
+  background: url("public/black.png") repeat-y !important;
+}
