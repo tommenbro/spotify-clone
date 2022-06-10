@@ -23,11 +23,33 @@ import {
 import { useStoreActions } from "easy-peasy";
 
 
-const Player = () => {
+const Player = ({songs, activeSong}) => {
+    const [playing, setPlaying] = useState(true);
+    const [index, setIndex] = useState(0);
+    const [seek, setSeek] = useState(0.0);
+    const [repeat, setRepeat] = useState(false);
+    const [shuffle, setShuffle] = useState(false);
+    const [duration, setDuration] = useState(0.0);
+
+    const setPlayState = (value) => {
+        setPlaying(value)
+    }
+
+    const onShuffle = () => {
+        setShuffle((state) => !state);
+    }   
+
+    const onRepeat = () => {
+        setRepeat((state) => !state);
+    }
+
     return (
         <Box>
             <Box>
-             {/*   <ReactHowler />*/}
+                {/*<ReactHowler
+                playing={playing}
+                src={activeSong?.url}
+    />*/}
             </Box>
             <Center color="gray.600" >
                 <ButtonGroup>
@@ -36,6 +58,8 @@ const Player = () => {
                     variant="link" 
                     aria-label="shuffle" 
                     fontSize="24px" 
+                    color={shuffle ? 'green.400' : 'gray.600'}
+                    onClick={onShuffle}
                     icon={<MdShuffle />} 
                     />
                     <IconButton 
@@ -45,22 +69,28 @@ const Player = () => {
                     fontSize="24px" 
                     icon={<MdSkipPrevious />} 
                     />
-                    <IconButton 
-                    outline="none" 
-                    variant="link" 
-                    aria-label="play" 
-                    fontSize="40px" 
-                    color="white"
-                    icon={<MdOutlinePlayCircleFilled />} 
+                    {playing ? (
+                        <IconButton 
+                        outline="none" 
+                        variant="link" 
+                        aria-label="pause" 
+                        fontSize="40px" 
+                        color="white"
+                        icon={<MdOutlinePauseCircleFilled />} 
+                        onClick={() => setPlayState(false)}
                     />
+                    ) : (
                     <IconButton 
-                    outline="none" 
-                    variant="link" 
-                    aria-label="pause" 
-                    fontSize="40px" 
-                    color="white"
-                    icon={<MdOutlinePauseCircleFilled />} 
+                        outline="none" 
+                        variant="link" 
+                        aria-label="play" 
+                        fontSize="40px" 
+                        color="white"
+                        icon={<MdOutlinePlayCircleFilled />} 
+                        onClick={() => setPlayState(true)}
+
                     />
+                    )}
                     <IconButton 
                     outline="none" 
                     variant="link" 
@@ -73,6 +103,8 @@ const Player = () => {
                     variant="link" 
                     aria-label="repeat" 
                     fontSize="24px" 
+                    color={repeat ? 'green.400' : 'gray.600'}
+                    onClick={onRepeat}
                     icon={<MdOutlineRepeat />} 
                     />
                 </ButtonGroup>
